@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TCPServeur;
+package ServeurTCP;
 
 /**
  * This application shows the difference between a single threaded TCP server
@@ -19,7 +19,7 @@ package TCPServeur;
  *
  * @author Olivier Liechti
  */
-public class TcpServers {
+public class TCPServer {
 
     /**
      * @param args the command line arguments
