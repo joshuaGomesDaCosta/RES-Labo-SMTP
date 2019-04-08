@@ -1,91 +1,130 @@
 package ClientSMTP;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
 
 public class MailSender {
     // partie statique -------------------
     private final static Logger LOG = Logger.getLogger(MailSender.class.getName());
-    private final static MailSender instance;
+    private static MailSender instance = null;
+
+    static{
+        instance = new MailSender();
+    }
 
     public static MailSender getInstance(){
         return instance;
     }
 
-    //initialise l'instance unique de mailSender
-    static {
-        instance = new MailSender();
-    }
-
     //variable membre -----------------
     private String[] mails = null;
     private String[] pranks = null;
+    private int port;
+    /**TODO a part le port y-a-t'il d'autre config?
     private Config config = null;
 
     private class Config{
-        private int maxGroupSize;
         private int port;
-        public Config(int maxGroupSize, int port){
-            this.maxGroupSize = maxGroupSize;
+        public Config( int port){
             this.port = port;
         }
     }
-
-    private MailSender(){}
-
-    private MailSender(String[] mails, String[] pranks, File config = null){
-        this.mails = mails;
-        this.pranks = pranks;
-    }
+    */
+    //méthode privée -----------------
+    private MailSender(){};
 
     /**
      * @brief               : génère le groupe de mails à utiliser (la première adresse est le sender)
      * @param GroupSize     : int le nombre d'adresses mails utilisées (en comptant l'expediteur)
      * @return              : String[] du tableau d'adresses utilisées.
      */
-    private String[] generateGroup(int GroupSize){
+    private String[] generateGroup(int GroupSize) throws Exception{
+        String mail = new String();
+        Random rand = new Random();
+        boolean isExist;
         String[] group = new String[GroupSize];
-        /**TODO*/
+        if(GroupSize > mails.length ) {
+            throw new Exception("Group size too big");
+        }
+        /**TODO pas optimale*/
+        Collections.shuffle(Arrays.asList(mails));
+        for(int i = 0; i < GroupSize; i++) {
+            do {
+                mail = mails[rand.nextInt(mails.length)];
+                isExist = false;
+                for(int j = 0; j < i; j++){
+                    if(group[j] == mail){
+                        isExist = true;
+                        break;
+                    }
+                }
+            }while(isExist);
+            group[i] = mail;
+        }
         return group;
     }
 
     /**
-     * @brief   : lit le fichier contenant les pranks et les stockent dans le membre pranks
+     * @brief            : lit le fichier contenant les pranks et les stockent dans le membre pranks
+     * @param pranksFile : File du fichier de configuration
      */
-    private void readPranks(){
+    private void readPranks(File pranksFile){
         /**TODO*/
     }
 
     /**
-     * @brief   : lit le fichier contenant les adresses mails et les stockent dans le membre mails
+     * @brief           : lit le fichier contenant les adresses mails et les stockent dans le membre mails
+     * @param mailsFile : File du fichier de configuration
      */
-    private void readMailPool(){
+    private void readMailPool(File mailsFile){
         /**TODO*/
     }
 
     /**
-     * @brief           : configure le bot (port, serveur SMTP, ...)
-     * @param config    : File du fichier de configuration
+     * @brief            : configure le bot (port, serveur SMTP, ...)
+     * @param configFile : File du fichier de configuration
      */
-    public void setConfig(File config){
+    private void readConfig(File configFile){
         /**TODO*/
     }
 
-    public void initialise(String configFile ,String pranks, String mailPool){
-        /**TODO*/
+    //méthode publiques  -----------------
+
+    public void initialise(int port, String[] mailsPool, String[] pranksPool){
+        this.port = port;
+        this.mails = mails;
+        this.pranks = pranks;
+    }
+
+    public void initialise(File configFile, File mailsFile, File pranksFile){
+        this.port = port;
+        this.mails = mails;
+        this.pranks = pranks;
     }
 
     /**
      * @brief               : demande au bot d'envoyer les mails
-     * @param maxGroupSize  : int le nombre d'adresses mails utilisées (en comptant l'expediteur)
+     * @param nbPrank  : int le nombre de blagues à envoyer
+     * @param maxGroupSize  : int le nombre d'adresses mails utilisées (en comptant l'expediteur) par blague
      */
-    public void send( int maxGroupSize){
+    public void send( int nbPrank, int maxGroupSize){
         Random rand = new Random();
-        String[] group = generateGroup(rand.nextInt(maxGroupSize);
-        String prank = pranks[rand.nextInt(pranks.length)];
+        String[] group;
+        String prank;
         Mail mail;
-
-        /** TODO*/
+        try {
+            for (int i = 0; i < nbPrank; i++) {
+                group = generateGroup(rand.nextInt(maxGroupSize));
+                prank = pranks[rand.nextInt(pranks.length)];
+                /** TODO*/
+            }
+        }
+        catch(Exception e){
+            LOG.log(Level.SEVERE, null, e);
+        }
     }
 }

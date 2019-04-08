@@ -1,14 +1,12 @@
 import ClientSMTP.*;
-import java.io.FileReader;
+import java.io.File;
 
 public class Main {
-    public int main(String[] args) {
-        MailSender mailSender = MailSender.getInstance()
-        mailSender.initialise("config.txt","Pranks.txt","MailPoolAdress.txt");
+    public void main(String[] args) {
+        MailSender mailSender = MailSender.getInstance();
+        mailSender.initialise(new File("config.txt"),new File("Pranks.txt"), new File("MailPoolAdress.txt"));
 
-        mailSender.send(4);
-        mailSender.send(8);
-        mailSender.setConfig(new FileReader("config2.txt"));
-        mailSender.send(6);
+        mailSender.send(1, 4);
+        mailSender.send(3, 8);
     }
 }
