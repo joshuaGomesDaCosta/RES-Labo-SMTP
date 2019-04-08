@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import java.io.File;
 
 public class MailSender {
-    // partie static -------------------
+    // partie statique -------------------
     private final static Logger LOG = Logger.getLogger(MailSender.class.getName());
     private final static MailSender instance;
 
@@ -21,12 +21,14 @@ public class MailSender {
     //variable membre -----------------
     private String[] mails = null;
     private String[] pranks = null;
+    private Config config = null;
 
-    private class config{
+    private class Config{
         private int maxGroupSize;
         private int port;
-        public config(){
-
+        public Config(int maxGroupSize, int port){
+            this.maxGroupSize = maxGroupSize;
+            this.port = port;
         }
     }
 
