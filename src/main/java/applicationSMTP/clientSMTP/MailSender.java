@@ -23,17 +23,8 @@ public class MailSender {
     //variable membre -----------------
     private String[] mails = null;
     private String[] pranks = null;
-    private int port;
-    /**TODO a part le port y-a-t'il d'autre config?
-    private Config config = null;
+    private ClientSMTP clientSMTP;
 
-    private class Config{
-        private int port;
-        public Config( int port){
-            this.port = port;
-        }
-    }
-    */
     //méthode privée -----------------
     private MailSender(){};
 
@@ -84,27 +75,29 @@ public class MailSender {
 
     //méthode publiques  -----------------
 
-    public void initialise(File configFile, File mailsFile, File pranksFile){
-        this.port = port;
-        this.mails = mails;
-        this.pranks = pranks;
+    public void initialise(String adress, int port, File mailsFile, File pranksFile){
+        this.clientSMTP = new ClientSMTP( adress, port);
+        readMailPool( mailsFile);
+        readPranks( pranksFile);
     }
 
-    /**
+    /**TODO faut-il que nbPrank et maxGroupSize soit défini dans la config
      * @brief               : demande au bot d'envoyer les mails
      * @param nbPrank  : int le nombre de blagues à envoyer
-     * @param maxGroupSize  : int le nombre d'adresses mails utilisées (en comptant l'expediteur) par blague
+     * @param maxGroupSize  : int le nombre d'adresses mails utilisées (sans compter l'expediteur) par blague
      */
     public void send( int nbPrank, int maxGroupSize){
         Random rand = new Random();
-        String[] group;
-        String prank;
-        Mail mail;
+        Mail mail = new Mail();
         try {
             for (int i = 0; i < nbPrank; i++) {
-                group = generateGroup(rand.nextInt(maxGroupSize));
-                prank = pranks[rand.nextInt(pranks.length)];
-                /** TODO*/
+                //initialise le mail à envoyer
+                mail.setFrom(mails[rand.nextInt(mails.length)]);
+                mail.setTo(generateGroup(rand.nextInt(maxGroupSize)));
+                mail.setSubject("Prank");
+                mail.setBody(pranks[rand.nextInt(pranks.length)]);
+
+                clientSMTP.sendMail(mail);
             }
         }
         catch(Exception e){

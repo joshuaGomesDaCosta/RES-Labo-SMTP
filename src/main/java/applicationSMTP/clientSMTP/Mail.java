@@ -4,15 +4,17 @@ import java.util.LinkedList;
 
 public class Mail {
     private String from;
-    private LinkedList<String> to;
-    private LinkedList<String> cc;
+    private String[] to;
+    private String[] cc;
     private String body;
+    private String subject;
 
     // Constructeurs ------------------------------------------------------------
-    public Mail(String from, LinkedList<String> to, LinkedList<String> cc, String body) {
+    public Mail(String from, String[] to, String[] cc, String subject,String body) {
         this.from = from;
         this.to = to;
         this.cc = cc;
+        this.subject = subject;
         this.body = body;
     }
 
@@ -24,12 +26,16 @@ public class Mail {
         return from;
     }
 
-    public LinkedList<String> getTo() {
+    public String[] getTo() {
         return to;
     }
 
-    public LinkedList<String> getCc() {
+    public String[] getCc() {
         return cc;
+    }
+
+    public String getSubject() {
+        return subject;
     }
 
     public String getBody() {
@@ -41,12 +47,16 @@ public class Mail {
         this.from = from;
     }
 
-    public void setTo(LinkedList<String> to) {
+    public void setTo(String[] to) {
         this.to = to;
     }
 
-    public void setCc(LinkedList<String> cc) {
+    public void setCc(String[] cc) {
         this.cc = cc;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public void setBody(String body) {

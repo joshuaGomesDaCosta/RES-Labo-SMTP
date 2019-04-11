@@ -46,9 +46,21 @@ public class ClientSMTP {
         write("MAIL FROM: " + mail.getFrom());
 
         for(String to: mail.getTo() ){
+            write("RCPT TO: " + to);
+        }
+
+        for(String to: mail.getCc() ){
             write("RCPT TO:" + to);
         }
 
+        write("DATA\n");
+        write("From: " + mail.getFrom() + "\n" +
+                "To: " + mail.getTo() + "\n" +
+                "Subject: " + mail.getSubject() + "\n" +
+                mail.getBody() + "\n"
+        );
+
+        write("quit");
     }
 
     private boolean write(String msg) throws Exception{
