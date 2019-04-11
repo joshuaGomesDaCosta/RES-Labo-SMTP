@@ -1,5 +1,9 @@
-import ClientSMTP.*;
+package applicationSMTP;
+
+import applicationSMTP.clientSMTP.*;
 import java.io.File;
+
+package applicationSMTP;
 
 public class Main {
     public void main(String[] args) {

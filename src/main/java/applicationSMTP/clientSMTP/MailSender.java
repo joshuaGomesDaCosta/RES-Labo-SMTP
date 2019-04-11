@@ -1,4 +1,4 @@
-package ClientSMTP;
+package applicationSMTP.clientSMTP;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,17 +53,7 @@ public class MailSender {
         /**TODO pas optimale*/
         Collections.shuffle(Arrays.asList(mails));
         for(int i = 0; i < GroupSize; i++) {
-            do {
-                mail = mails[rand.nextInt(mails.length)];
-                isExist = false;
-                for(int j = 0; j < i; j++){
-                    if(group[j] == mail){
-                        isExist = true;
-                        break;
-                    }
-                }
-            }while(isExist);
-            group[i] = mail;
+            group[i] = mails[i];
         }
         return group;
     }
@@ -93,12 +83,6 @@ public class MailSender {
     }
 
     //méthode publiques  -----------------
-
-    public void initialise(int port, String[] mailsPool, String[] pranksPool){
-        this.port = port;
-        this.mails = mails;
-        this.pranks = pranks;
-    }
 
     public void initialise(File configFile, File mailsFile, File pranksFile){
         this.port = port;

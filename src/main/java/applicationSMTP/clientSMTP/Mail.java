@@ -1,4 +1,4 @@
-package ClientSMTP;
+package applicationSMTP.clientSMTP;
 
 import java.util.LinkedList;
 
