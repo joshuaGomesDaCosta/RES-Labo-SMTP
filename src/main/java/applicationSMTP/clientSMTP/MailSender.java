@@ -53,15 +53,31 @@ public class MailSender {
      * @brief            : lit le fichier contenant les pranks et les stockent dans le membre pranks
      * @param pranksFile : File du fichier de configuration
      */
-    private void readPranks(File pranksFile){
+    private String[] readPranks(File pranksFile){
         /**TODO*/
+        ArrayList<String> pranks = new ArrayList();
+        try {
+            Reader rd = new InputStreamReader(new FileInputStream(pranksFile), "UTF-8");
+            BufferedReader bfRd = new BufferedReader(rd);
+
+            String line;
+            while ((line = bfRd.readLine()) != null) {
+                System.out.println(line);
+                pranks.add(line);
+            }
+            bfRd.close();
+            rd.close();
+        } catch(IOException e){
+            System.out.printf(e.toString());
+        }
+        return pranks.toArray(new String[0]);
     }
 
     /**
      * @brief           : lit le fichier contenant les adresses mails et les stockent dans le membre mails
      * @param mailsFile : File du fichier de configuration
      */
-    private void readMailPool(File mailsFile){
+    private String[] readMailPool(File mailsFile){
         /**TODO*/
     }
 
