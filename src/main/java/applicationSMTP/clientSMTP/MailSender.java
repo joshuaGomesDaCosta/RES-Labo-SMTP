@@ -1,11 +1,12 @@
 package applicationSMTP.clientSMTP;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.File;
 
 public class MailSender {
     // partie statique -------------------
@@ -62,7 +63,6 @@ public class MailSender {
 
             String line;
             while ((line = bfRd.readLine()) != null) {
-                System.out.println(line);
                 pranks.add(line);
             }
             bfRd.close();
@@ -86,7 +86,6 @@ public class MailSender {
 
             String line;
             while ((line = bfRd.readLine()) != null) {
-                System.out.println(line);
                 mails.add(line);
             }
             bfRd.close();

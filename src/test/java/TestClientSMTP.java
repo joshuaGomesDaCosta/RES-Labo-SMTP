@@ -1,11 +1,12 @@
 
 import applicationSMTP.clientSMTP.ClientSMTP;
-import jav
+//import java
+import org.junit.jupiter.api.Test;
 
 public class TestClientSMTP {
     @Test
     public void itShouldWork(){
         ClientSMTP clientSMTP = new ClientSMTP("adresse",5);
-        assertEqu
+
     }
 }
