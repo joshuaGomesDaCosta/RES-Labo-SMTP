@@ -79,6 +79,22 @@ public class MailSender {
      */
     private String[] readMailPool(File mailsFile){
         /**TODO*/
+        ArrayList<String> mails = new ArrayList();
+        try {
+            Reader rd = new InputStreamReader(new FileInputStream(mailsFile), "UTF-8");
+            BufferedReader bfRd = new BufferedReader(rd);
+
+            String line;
+            while ((line = bfRd.readLine()) != null) {
+                System.out.println(line);
+                mails.add(line);
+            }
+            bfRd.close();
+            rd.close();
+        } catch(IOException e){
+            System.out.printf(e.toString());
+        }
+        return mails.toArray(new String[0]);
     }
 
     /**
