@@ -109,8 +109,8 @@ public class MailSender {
 
     public void initialise(String adress, int port, File mailsFile, File pranksFile){
         this.clientSMTP = new ClientSMTP( adress, port);
-        readMailPool( mailsFile);
-        readPranks( pranksFile);
+        this.mails = readMailPool(mailsFile);
+        this.pranks = readPranks(pranksFile);
     }
 
     /**TODO faut-il que nbPrank et maxGroupSize soit défini dans la config
@@ -135,5 +135,9 @@ public class MailSender {
         catch(Exception e){
             LOG.log(Level.SEVERE, null, e);
         }
+    }
+
+    public String[] getPranks(){
+        return pranks;
     }
 }
