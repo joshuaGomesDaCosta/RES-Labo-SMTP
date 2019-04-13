@@ -25,6 +25,9 @@ public class MailSender {
     private String[] mails = null;
     private String[] pranks = null;
     private ClientSMTP clientSMTP;
+    private int smtpServerPort;
+    private String smtpServerAddress;
+    private int sizeGroups;
 
     //méthode privée -----------------
     private MailSender(){};
@@ -54,7 +57,7 @@ public class MailSender {
      * @brief            : lit le fichier contenant les pranks et les stockent dans le membre pranks
      * @param pranksFile : File du fichier de configuration
      */
-    private String[] readPranks(File pranksFile){
+    private void readPranks(File pranksFile){
         /**TODO*/
         ArrayList<String> pranks = new ArrayList();
         try {
@@ -70,14 +73,14 @@ public class MailSender {
         } catch(IOException e){
             System.out.printf(e.toString());
         }
-        return pranks.toArray(new String[0]);
+        this.pranks = pranks.toArray(new String[0]);
     }
 
     /**
      * @brief           : lit le fichier contenant les adresses mails et les stockent dans le membre mails
      * @param mailsFile : File du fichier de configuration
      */
-    private String[] readMailPool(File mailsFile){
+    private void readMailPool(File mailsFile){
         /**TODO*/
         ArrayList<String> mails = new ArrayList();
         try {
@@ -93,7 +96,7 @@ public class MailSender {
         } catch(IOException e){
             System.out.printf(e.toString());
         }
-        return mails.toArray(new String[0]);
+        this.mails =  mails.toArray(new String[0]);
     }
 
     /**
@@ -102,14 +105,35 @@ public class MailSender {
      */
     private void readConfig(File configFile){
         /**TODO*/
+        ArrayList<String> mails = new ArrayList();
+        try {
+            Reader rd = new InputStreamReader(new FileInputStream(configFile), "UTF-8");
+            BufferedReader bfRd = new BufferedReader(rd);
+
+            String line;
+            while ((line = bfRd.readLine()) != null) {
+                mails.add(line);
+            }
+            bfRd.close();
+            rd.close();
+        } catch(IOException e){
+            System.out.printf(e.toString());
+        }
+        String[] config = mails.toArray(new String[0]);
+        for (String param:config){
+            param = param.substring(param.lastIndexOf("=") + 1);
+        }
+        this.smtpServerAddress = config[0];
+        this.smtpServerPort = Integer.parseInt(config[1]);
+        this.smtpServerPort = Integer.parseInt(config[2]);
     }
 
     //méthode publiques  -----------------
 
-    public void initialise(String adress, int port, File mailsFile, File pranksFile){
-        this.clientSMTP = new ClientSMTP( adress, port);
-        this.mails = readMailPool(mailsFile);
-        this.pranks = readPranks(pranksFile);
+    public void initialise(File configFile, File mailsFile, File pranksFile){
+        readConfig(configFile);
+        readMailPool(mailsFile);
+        readPranks(pranksFile);
     }
 
     /**TODO faut-il que nbPrank et maxGroupSize soit défini dans la config
@@ -139,4 +163,10 @@ public class MailSender {
     public String[] getPranks(){
         return pranks;
     }
+
+    public String getSmtpServerAddress (){return smtpServerAddress;}
+
+    public int getSmtpServerPort(){ return smtpServerPort;}
+
+    public int getSizeGroups() {return sizeGroups;}
 }
