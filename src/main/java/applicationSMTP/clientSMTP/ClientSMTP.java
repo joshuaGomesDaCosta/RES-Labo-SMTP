@@ -27,48 +27,84 @@ public class ClientSMTP {
         String line;
 
         socket = new Socket(adress,port);
-        writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        writer = new PrintWriter(socket.getOutputStream());
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        LOG.info(reader.readLine() + "\n");
-        writer.print("HELO");
-        line = reader.readLine();
-        LOG.info( line+ "\n");
+        try{
+            line = read();
+            if(line.startsWith("220")){
+                write("EHLO pranks\r\n");
+            }
 
-        if(!line.startsWith("250")){
-            throw new Exception("error SMTP : " + line);
+            line = read();
+            if(!line.startsWith("250")){
+                throw new Exception("error SMTP : " + line);
+            }
+
+            while(!line.contains("250 Ok")) {
+                line = read();
+            }
+            write("MAIL FROM:<" + mail.getFrom() + ">\r\n");
+            line = read();
+
+            if(!line.startsWith("250")){
+                throw new Exception("error SMTP : " + line);
+            } else {
+                for(String to: mail.getTo() ){
+                    write("RCPT TO:<" + to + ">\r\n");
+                    line = read();
+                    if(!line.startsWith("250")){
+                        throw new Exception("error SMTP : " + line);
+                    }
+                }
+            }
+
+            write("DATA\r\n");
+            line = read();
+
+            if(!line.startsWith("354")){
+                throw new Exception("error SMTP : " + line);
+            } else {
+                write("From: " + mail.getFrom() + "\r\n" + "To: ");
+                for(String to: mail.getTo()){
+                    write(to);
+                    if(to != mail.getTo()[mail.getTo().length-1]){
+                        write(", ");
+                    }
+                }
+                write("\r\n" + "Subject: " + mail.getSubject() + "\r\n\r\n" + mail.getBody() + "\r\n.\r\n");
+                line = read();
+            }
+
+            if(!line.startsWith("250")){
+                throw new Exception("error SMTP : " + line);
+            }
+            else{
+                write("quit\r\n");
+                read();
+            }
+
+            reader.close();
+            writer.close();
+            socket.close();
+        } catch(Exception e){
+            LOG.info(e.toString());
+            reader.close();
+            writer.close();
+            socket.close();
         }
-
-        while(line.startsWith("250")) {
-            line = reader.readLine();
-            LOG.info(line + "\n");
-        }
-        write("MAIL FROM: " + mail.getFrom());
-
-        for(String to: mail.getTo() ){
-            write("RCPT TO: " + to);
-        }
-
-        for(String to: mail.getCc() ){
-            write("RCPT TO:" + to);
-        }
-
-        write("DATA\n");
-        write("From: " + mail.getFrom() + "\n" +
-                "To: " + mail.getTo() + "\n" +
-                "Subject: " + mail.getSubject() + "\n" +
-                mail.getBody() + "\n"
-        );
-
-        write("quit");
     }
 
-    private boolean write(String msg) throws Exception{
+    private void write(String msg) throws Exception{
         writer.print(msg);
-        String line = reader.readLine();
-        LOG.info( line + "\n");
+        //writer.print(msg);
+        writer.flush();
+    }
 
-        return line.startsWith("250");
+    private String read() throws Exception{
+        String line = reader.readLine();
+        LOG.info( line + "\r\n");
+        return line;
     }
 }
 

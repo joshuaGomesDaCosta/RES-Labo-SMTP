@@ -30,9 +30,9 @@ public class Mail {
         return to;
     }
 
-    public String[] getCc() {
+    /*public String[] getCc() {
         return cc;
-    }
+    }*/
 
     public String getSubject() {
         return subject;
@@ -51,9 +51,9 @@ public class Mail {
         this.to = to;
     }
 
-    public void setCc(String[] cc) {
+    /*public void setCc(String[] cc) {
         this.cc = cc;
-    }
+    }*/
 
     public void setSubject(String subject) {
         this.subject = subject;

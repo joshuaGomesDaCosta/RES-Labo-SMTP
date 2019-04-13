@@ -1,3 +1,3 @@
 smtpServerAddress=localhost
 smtpServerPort=25
-sizeGroups=5
+sizeGroups=20
