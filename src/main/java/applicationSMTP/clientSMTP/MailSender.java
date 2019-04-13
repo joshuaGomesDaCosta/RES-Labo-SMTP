@@ -38,9 +38,6 @@ public class MailSender {
      * @return              : String[] du tableau d'adresses utilisées.
      */
     private String[] generateGroup(int GroupSize) throws Exception{
-        String mail = new String();
-        Random rand = new Random();
-        boolean isExist;
         String[] group = new String[GroupSize];
         if(GroupSize > mails.length ) {
             throw new Exception("Group size too big");
@@ -131,22 +128,26 @@ public class MailSender {
         readConfig(configFile);
         readMailPool(mailsFile);
         readPranks(pranksFile);
+        clientSMTP = new ClientSMTP(smtpServerAddress, smtpServerPort);
     }
 
-    /**TODO faut-il que nbPrank et maxGroupSize soit défini dans la config
-     * @brief               : demande au bot d'envoyer les mails
+    /**
+     * @brief : demande au bot d'envoyer les mails
      */
     public void send(){
         Random rand = new Random();
         Mail mail = new Mail();
+        int numberOfMailsToSend = mails.length / sizeGroups;
         try {
-            //initialise le mail à envoyer
-            mail.setFrom(mails[rand.nextInt(mails.length)]);
-            mail.setTo(generateGroup(rand.nextInt(sizeGroups)));
-            mail.setSubject("Chuck Norris Fact");
-            mail.setBody(pranks[rand.nextInt(pranks.length)]);
+            for (int i = 0; i < numberOfMailsToSend; i++) {
+                //initialise le mail à envoyer
+                mail.setFrom(mails[rand.nextInt(mails.length)]);
+                mail.setTo(generateGroup(sizeGroups-1));
+                mail.setSubject("Chuck Norris Fact");
+                mail.setBody(pranks[rand.nextInt(pranks.length)]);
 
-            clientSMTP.sendMail(mail);
+                clientSMTP.sendMail(mail);
+            }
         }
         catch(Exception e){
             LOG.log(Level.SEVERE, null, e);
