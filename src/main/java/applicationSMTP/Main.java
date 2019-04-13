@@ -9,7 +9,6 @@ public class Main {
         MailSender mailSender = MailSender.getInstance();
         mailSender.initialise(new File("./src/resources/Config.txt"), new File("./src/resources/MailPoolAdress.txt"), new File("./src/resources/Pranks.txt"));
 
-        mailSender.send(1, 4);
-        mailSender.send(3, 8);
+        mailSender.send();
     }
 }

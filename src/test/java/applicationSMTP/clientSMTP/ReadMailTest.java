@@ -6,18 +6,16 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class ReadConfigTest {
+public class ReadMailTest {
     @Test
-    public void itShouldReadConfigFile(){
-        String[] config = {"localhost", "25", "5"};
-        String[] configFile = new String[3];
+    public void itShouldReadPranksFile(){
+        String[] mails = {"test@gmail.com", "pranks@outlook.com", "noreply@yahoo.fr"};
+        String[] mailsFile;
 
         MailSender mailSender = MailSender.getInstance();
         mailSender.initialise(new File("./src/test/java/resources/ConfigTest.txt"), new File("./src/test/java/resources/MailPoolAdressTest.txt"), new File("./src/test/java/resources/PranksTest.txt"));
-        configFile[0] = mailSender.getSmtpServerAddress();
-        configFile[1] = Integer.toString(mailSender.getSmtpServerPort());
-        configFile[2] = Integer.toString(mailSender.getSizeGroups());
+        mailsFile = mailSender.getMails();
 
-        assertArrayEquals(config, configFile);
+        assertArrayEquals(mails, mailsFile);
     }
 }

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class MailSender {
     // partie statique -------------------
     private final static Logger LOG = Logger.getLogger(MailSender.class.getName());
-    private static MailSender instance = null;
+    private static MailSender instance;
 
     static{
         instance = new MailSender();
@@ -58,7 +58,6 @@ public class MailSender {
      * @param pranksFile : File du fichier de configuration
      */
     private void readPranks(File pranksFile){
-        /**TODO*/
         ArrayList<String> pranks = new ArrayList();
         try {
             Reader rd = new InputStreamReader(new FileInputStream(pranksFile), "UTF-8");
@@ -81,7 +80,6 @@ public class MailSender {
      * @param mailsFile : File du fichier de configuration
      */
     private void readMailPool(File mailsFile){
-        /**TODO*/
         ArrayList<String> mails = new ArrayList();
         try {
             Reader rd = new InputStreamReader(new FileInputStream(mailsFile), "UTF-8");
@@ -104,7 +102,6 @@ public class MailSender {
      * @param configFile : File du fichier de configuration
      */
     private void readConfig(File configFile){
-        /**TODO*/
         ArrayList<String> mails = new ArrayList();
         try {
             Reader rd = new InputStreamReader(new FileInputStream(configFile), "UTF-8");
@@ -138,31 +135,27 @@ public class MailSender {
 
     /**TODO faut-il que nbPrank et maxGroupSize soit défini dans la config
      * @brief               : demande au bot d'envoyer les mails
-     * @param nbPrank  : int le nombre de blagues à envoyer
-     * @param maxGroupSize  : int le nombre d'adresses mails utilisées (sans compter l'expediteur) par blague
      */
-    public void send( int nbPrank, int maxGroupSize){
+    public void send(){
         Random rand = new Random();
         Mail mail = new Mail();
         try {
-            for (int i = 0; i < nbPrank; i++) {
-                //initialise le mail à envoyer
-                mail.setFrom(mails[rand.nextInt(mails.length)]);
-                mail.setTo(generateGroup(rand.nextInt(maxGroupSize)));
-                mail.setSubject("Prank");
-                mail.setBody(pranks[rand.nextInt(pranks.length)]);
+            //initialise le mail à envoyer
+            mail.setFrom(mails[rand.nextInt(mails.length)]);
+            mail.setTo(generateGroup(rand.nextInt(sizeGroups)));
+            mail.setSubject("Chuck Norris Fact");
+            mail.setBody(pranks[rand.nextInt(pranks.length)]);
 
-                clientSMTP.sendMail(mail);
-            }
+            clientSMTP.sendMail(mail);
         }
         catch(Exception e){
             LOG.log(Level.SEVERE, null, e);
         }
     }
 
-    public String[] getPranks(){
-        return pranks;
-    }
+    public String[] getPranks(){return pranks;}
+
+    public String[] getMails(){return mails;}
 
     public String getSmtpServerAddress (){return smtpServerAddress;}
 
