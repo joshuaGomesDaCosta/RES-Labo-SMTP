@@ -13,7 +13,7 @@ public class ReadConfigTest {
         String[] configFile = new String[3];
 
         MailSender mailSender = MailSender.getInstance();
-        mailSender.initialise(new File("C:/Users/dasil/RES_labo/SMTP/RES-Labo-SMTP/src/resources/Config.txt"), new File("C:/Users/dasil/RES_labo/SMTP/RES-Labo-SMTP/src/resources/MailPoolAdress.txt"), new File("C:/Users/dasil/RES_labo/SMTP/RES-Labo-SMTP/src/resources/Pranks.txt"));
+        mailSender.initialise(new File("C:/Users/dasil/RES_labo/SMTP2/RES-Labo-SMTP/src/resources/Config.txt"), new File("C:/Users/dasil/RES_labo/SMTP2/RES-Labo-SMTP/src/resources/MailPoolAdress.txt"), new File("C:/Users/dasil/RES_labo/SMTP2/RES-Labo-SMTP/src/resources/Pranks.txt"));
         configFile[0] = mailSender.getSmtpServerAddress();
         configFile[1] = Integer.toString(mailSender.getSmtpServerPort());
         configFile[2] = Integer.toString(mailSender.getSizeGroups());

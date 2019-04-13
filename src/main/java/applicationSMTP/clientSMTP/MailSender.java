@@ -120,12 +120,12 @@ public class MailSender {
             System.out.printf(e.toString());
         }
         String[] config = mails.toArray(new String[0]);
-        for (String param:config){
-            param = param.substring(param.lastIndexOf("=") + 1);
+        for(int i = 0; i < config.length; ++i){
+            config[i] = config[i].substring(config[i].lastIndexOf("=") + 1);
         }
         this.smtpServerAddress = config[0];
         this.smtpServerPort = Integer.parseInt(config[1]);
-        this.smtpServerPort = Integer.parseInt(config[2]);
+        this.sizeGroups = Integer.parseInt(config[2]);
     }
 
     //méthode publiques  -----------------
