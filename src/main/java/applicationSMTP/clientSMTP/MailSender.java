@@ -42,7 +42,7 @@ public class MailSender {
         if(GroupSize > mails.length ) {
             throw new Exception("Group size too big");
         }
-        /**TODO pas optimale*/
+
         Collections.shuffle(Arrays.asList(mails));
         for(int i = 0; i < GroupSize; i++) {
             group[i] = mails[i];
@@ -132,7 +132,7 @@ public class MailSender {
     }
 
     /**
-     * @brief : demande au bot d'envoyer les mails
+     * @brief       : demande au bot d'envoyer les mails
      */
     public void send(){
         Random rand = new Random();

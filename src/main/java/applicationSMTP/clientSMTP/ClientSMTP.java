@@ -97,7 +97,7 @@ public class ClientSMTP {
 
     private void write(String msg) throws Exception{
         writer.print(msg);
-        //writer.print(msg);
+        LOG.info(msg);
         writer.flush();
     }
 
