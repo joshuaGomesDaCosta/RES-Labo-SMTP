@@ -36,7 +36,7 @@ All files are in the `src/resources` directory.
 the central object is the unique instance of mailSender. We can get the instance with getInstance() and initialise it with initialise() (who needs 3 File: one for the list of mails, one for the list of prank and the last one to configure the server adress ans the ClientSMTP). the method send() use generateGroups() and select a prank and prepare a object Mail(implement the following attributes : From,to,cc,subject,body) with theses informations, then use sendMail from his ClientSMTP attribute.
 
 the ClientSMTP class use Socket, BufferedReader and PrintWriter for the communication with the server, the method sendMail() send the informations of the mail received in argument to the server.
-
+<div>
 exemple of communication:
 Client                                                 Server
 
@@ -60,5 +60,5 @@ mails informations
 (from,to,subject in header and body)   -------->
                                        <--------       250...
  quit                                  -------->  
- 
+ </div>
  
