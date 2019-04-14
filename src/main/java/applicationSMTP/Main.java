@@ -5,9 +5,9 @@ import java.io.File;
 
 
 public class Main {
-    public void main(String[] args) {
+    public static void main(String[] args) {
         MailSender mailSender = MailSender.getInstance();
-        mailSender.initialise(new File("./src/resources/Config.txt"), new File("./src/resources/MailPoolAdress.txt"), new File("./src/resources/Pranks.txt"));
+        mailSender.initialise(new File("../src/resources/Config.txt"), new File("../src/resources/MailPoolAddress.txt"), new File("../src/resources/Pranks.txt"));
 
         mailSender.send();
     }

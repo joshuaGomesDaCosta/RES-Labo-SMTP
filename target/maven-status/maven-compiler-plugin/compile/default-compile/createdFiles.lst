@@ -1,0 +1,4 @@
+applicationSMTP\clientSMTP\ClientSMTP.class
+applicationSMTP\clientSMTP\MailSender.class
+applicationSMTP\Main.class
+applicationSMTP\clientSMTP\Mail.class
