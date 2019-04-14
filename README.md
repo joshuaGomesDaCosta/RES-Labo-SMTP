@@ -39,7 +39,7 @@ the ClientSMTP class use Socket, BufferedReader and PrintWriter for the communic
 
 exemple of communication:
 Client                                                 Server
-_______________________________________________________________
+
                                        <--------       220...
 EHLO                                   -------->      
                                        <--------       250...
