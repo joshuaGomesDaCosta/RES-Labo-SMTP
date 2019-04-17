@@ -37,8 +37,8 @@ The central object is the unique instance of mailSender. We can get the instance
 
 the ClientSMTP class use Socket, BufferedReader and PrintWriter for the communication with the server, the method sendMail() send the informations of the mail received in argument to the server.
 
-##Structure of the ClientSMTP application
+## Structure of the ClientSMTP application
 ![communication_client_server](https://raw.githubusercontent.com/joshuaGomesDaCosta/RES-Labo-SMTP/master/figures/UML.png)  
 
-##SMTP Protocol
+## SMTP Protocol
 ![structure_application](https://raw.githubusercontent.com/joshuaGomesDaCosta/RES-Labo-SMTP/master/figures/communication.png)
