@@ -33,8 +33,12 @@ If you want to change the email addresses used, you can change them in the file 
 All files are in the `src/resources` directory.
 
 ## Implementation of the app
-the central object is the unique instance of mailSender. We can get the instance with getInstance() and initialise it with initialise() (who needs 3 File: one for the list of mails, one for the list of prank and the last one to configure the server adress ans the ClientSMTP). the method send() use generateGroups() and select a prank and prepare a object Mail(implement the following attributes : From,to,cc,subject,body) with theses informations, then use sendMail from his ClientSMTP attribute.
+The central object is the unique instance of mailSender. We can get the instance with getInstance() and initialise it with initialise() (who needs 3 File: one for the list of mails, one for the list of prank and the last one to configure the server address and the ClientSMTP). The method send() use generateGroups() and select a prank and prepare a object Mail(implement the following attributes : From,to,cc,subject,body) with these informations, then use sendMail from his ClientSMTP attribute.
 
 the ClientSMTP class use Socket, BufferedReader and PrintWriter for the communication with the server, the method sendMail() send the informations of the mail received in argument to the server.
 
-you can see the UML and the communication Schema in the figures folder.
+##Structure of the ClientSMTP application
+![communication_client_server](https://raw.githubusercontent.com/joshuaGomesDaCosta/RES-Labo-SMTP/master/figures/UML.png)  
+
+##SMTP Protocol
+![structure_application](https://raw.githubusercontent.com/joshuaGomesDaCosta/RES-Labo-SMTP/master/figures/communication.png)
