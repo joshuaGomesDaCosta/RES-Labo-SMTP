@@ -16,7 +16,7 @@ If you have Docker installed, you can build and run the `MockMock.jar` in the Do
 `docker build -t mockmockserver .`  
 This command will build your container with the DockerFile in the directory
 
-`docker run -p 8282:8282 -p 2525:2525 -p 8282:8282 -t mockmockserver`  
+`docker run -p 8282:8282 -p 2525:2525 -t mockmockserver`  
 This final command starts the server with the correct ports opened.
 
 You can test the mock server via the command `telnet localhost 2525` to interact with it and go to [http://localhost:8282]() for the web interface. Follow the [RFC  5321 Verifying and Sending Scenario](https://tools.ietf.org/html/rfc5321#appendix-D) example to "send" your first email to the MockMock server.
